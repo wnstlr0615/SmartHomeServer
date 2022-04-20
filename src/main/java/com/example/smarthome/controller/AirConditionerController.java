@@ -1,7 +1,8 @@
 package com.example.smarthome.controller;
 
 import com.example.smarthome.dto.ParameterDto;
-import com.example.smarthome.dto.SpeakerResponse;
+import com.example.smarthome.dto.speker.SpeakerServerDto;
+import com.example.smarthome.dto.speker.SpeakerServerDto.Response;
 import com.example.smarthome.model.AirState;
 import com.example.smarthome.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class AirConditionerController {
     private final JsonUtils jsonUtils;
 
     @PostMapping("/answer.AirConditioner")
-    public SpeakerResponse getTemperature(@RequestBody String json){
+    public SpeakerServerDto.Response getTemperature(@RequestBody String json){
         ParameterDto parameter = jsonUtils.getParameter(json, AIR_STATE);
         AirState stateType = AirState.fromValue(parameter.getValue());
 
@@ -33,14 +34,14 @@ public class AirConditionerController {
         log.info("잠시 후 에어컨이 {}", stateType.getResponseMessage());
 
         //response
-        Map<String, String> output = new HashMap();
+        Map<String, String> output = new HashMap<>();
 
         output.put("result", stateType.getResponseMessage());
-        return SpeakerResponse.createSpeakerResponse(output);
+        return SpeakerServerDto.Response.createSpeakerResponse(output);
     }
 
     @PostMapping("/answer.AirConTemp")
-    public SpeakerResponse setUpAirConTemp(@RequestBody String json){
+    public SpeakerServerDto.Response setUpAirConTemp(@RequestBody String json){
         System.out.println(json);
         ParameterDto parameter = jsonUtils.getParameter(json, AIRCON_TEMP);
         //TODO 온도 범위 설정 필요
@@ -51,10 +52,10 @@ public class AirConditionerController {
         log.info("에어컨 온드를  {}로 설정 합니다.", setTemp);
 
         //response
-        Map<String, String> output = new HashMap();
+        Map<String, String> output = new HashMap<>();
         output.put(AIRCON_TEMP, String.valueOf(setTemp));
 
-        return SpeakerResponse.createSpeakerResponse(output);
+        return SpeakerServerDto.Response.createSpeakerResponse(output);
     }
 
     private int getAirConTemp(String value) {

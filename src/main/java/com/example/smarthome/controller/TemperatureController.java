@@ -1,7 +1,8 @@
 package com.example.smarthome.controller;
 
 import com.example.smarthome.dto.ParameterDto;
-import com.example.smarthome.dto.SpeakerResponse;
+import com.example.smarthome.dto.speker.SpeakerServerDto;
+import com.example.smarthome.dto.speker.SpeakerServerDto.Response;
 import com.example.smarthome.model.TempType;
 import com.example.smarthome.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class TemperatureController {
     private final JsonUtils jsonUtils;
 
     @PostMapping("/answer.Temperature")
-    public SpeakerResponse getTemperature(@RequestBody String json){
+    public SpeakerServerDto.Response getTemperature(@RequestBody String json){
         ParameterDto parameter = jsonUtils.getParameter(json, TEMPERATURE);
         TempType tempType = TempType.fromValue(parameter.getValue());
 
@@ -35,12 +36,12 @@ public class TemperatureController {
 
         String tmep = "40도";
         //response
-        Map<String, String> output = new HashMap();
+        Map<String, String> output = new HashMap<>();
 
         output.put("temSenState", tmep);
         output.put("TEMPERATURE", parameter.getValue());
 
 
-        return SpeakerResponse.createSpeakerResponse(output);
+        return SpeakerServerDto.Response.createSpeakerResponse(output);
     }
 }
