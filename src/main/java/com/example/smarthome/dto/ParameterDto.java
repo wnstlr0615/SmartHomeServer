@@ -9,6 +9,5 @@ import lombok.*;
 @ToString
 public class ParameterDto {
     private String type;
-
     private String value;
 }
