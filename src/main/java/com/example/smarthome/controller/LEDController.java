@@ -26,8 +26,6 @@ import static com.example.smarthome.constant.EntityTypeConstant.ROOM_TYPE;
 @RequestMapping(value = "/api/speaker")
 @RequiredArgsConstructor
 public class LEDController {
-    private final LEDService ledService;
-    private final ObjectMapper mapper;
     private final JsonUtils jsonUtils;
     @PostMapping("/answer.led")
     public SpeakerResponse ledOn(@RequestBody String json){
