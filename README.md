@@ -1,6 +1,6 @@
 
 # 인공지능 스피커를 활용한 홈IOT 시스템 구축
-<hr>
+
 <img src="images/홈IOT환경구축.png" title="스마트홈 서버 " alt="사진 오류" >
 
 본 프로젝트는 인공지능 스피커 NUGU와 아두이노를 사용하여 스마트 홈을 구축 하는 프로젝트 입니다.
@@ -43,3 +43,6 @@ ex) 에어컨, 선풍기, 티비, 등등
 ## 인공지능 스피커 API 통신
 
 <img src="images/발화분석.png" title="발화분석" alt="사진 오류" width="600">
+
+### 참고
+[NUGU developers](https://developers.nugu.co.kr/#/)
