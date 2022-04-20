@@ -29,7 +29,7 @@ public class LEDService {
         ArduinoLEDOnOffDto.Request body = createArduinoLedOnOffDtoRequest(roomType, stateType);
         
         //아두이노 서버에 요청
-        sendToArduinoServerForLedOnOff(body);
+        sendLedOnOffRequestToArduinoServer(body);
 
         //response 생성
         return createArduinoLedOnOffDtoResponse(roomType, stateType);
@@ -39,7 +39,7 @@ public class LEDService {
         return ArduinoLEDOnOffDto.Request.createArduinoLEDOnOffDtoRequest(roomType, stateType);
     }
 
-    private void sendToArduinoServerForLedOnOff(ArduinoLEDOnOffDto.Request body) {
+    private void sendLedOnOffRequestToArduinoServer(ArduinoLEDOnOffDto.Request body) {
         ResponseEntity<String> responseEntity = restTemplateUtils.sendPostRequest(ArduinoRequestUriConstant.LED_ONOFF_PATH, body);
         if(responseEntity.getStatusCode().isError()) {
             log.error("아두이노 서버 LED On/Off 요청 실패");

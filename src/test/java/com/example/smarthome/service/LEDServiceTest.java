@@ -27,7 +27,6 @@ import static org.mockito.Mockito.when;
 class LEDServiceTest {
     @Mock
     RestTemplateUtils restTemplateUtils;
-
     @InjectMocks
     LEDService ledService;
 

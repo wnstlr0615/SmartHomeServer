@@ -9,5 +9,6 @@ public class EntityTypeConstant {
     public static final String AIRCON_TEMP = "AIRCON_TEMP";
     public static final String TV_STATE = "TV_STATE";
     public static final String TV_CHANNEL = "TV_CHANNEL";
+    public static final String TEMP_TYPE_DATA = "TEMP_TYPE_DATA";
 
 }

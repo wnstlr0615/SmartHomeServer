@@ -1,20 +1,21 @@
 package com.example.smarthome.controller;
 
-import com.example.smarthome.dto.ParameterDto;
 import com.example.smarthome.dto.speker.SpeakerServerDto;
-import com.example.smarthome.dto.speker.SpeakerServerDto.Response;
+import com.example.smarthome.error.code.SpeakerServerErrorCode;
+import com.example.smarthome.error.exception.SpeakerServerException;
 import com.example.smarthome.model.TempType;
-import com.example.smarthome.utils.JsonUtils;
+import com.example.smarthome.service.TemperatureService;
+import com.example.smarthome.utils.SpeakerServerRequestParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.validation.Valid;
 
 import static com.example.smarthome.constant.EntityTypeConstant.TEMPERATURE;
 
@@ -24,24 +25,26 @@ import static com.example.smarthome.constant.EntityTypeConstant.TEMPERATURE;
 
 @RequiredArgsConstructor
 public class TemperatureController {
-    private final JsonUtils jsonUtils;
+    private final TemperatureService temperatureService;
 
     @PostMapping("/answer.Temperature")
-    public SpeakerServerDto.Response getTemperature(@RequestBody String json){
-        ParameterDto parameter = jsonUtils.getParameter(json, TEMPERATURE);
-        TempType tempType = TempType.fromValue(parameter.getValue());
-
-        log.info("아두이노 서버에 온도 요청");
-        log.info("Temperature : {}", tempType.getValue());
-
-        String tmep = "40도";
-        //response
-        Map<String, String> output = new HashMap<>();
-
-        output.put("temSenState", tmep);
-        output.put("TEMPERATURE", parameter.getValue());
-
-
-        return SpeakerServerDto.Response.createSpeakerResponse(output);
+    public SpeakerServerDto.Response getTemperature(
+            @Valid @RequestBody SpeakerServerDto.Request request,
+            BindingResult error
+        ){
+        validatedRequestParameter(error);
+        TempType tempType = TempType.fromValue(
+                SpeakerServerRequestParser.getParameterValue(request, TEMPERATURE)
+        );
+        return temperatureService.sendRequestToGetTempTypeData(tempType);
+    }
+    private void validatedRequestParameter(BindingResult error) {
+        if(error.hasErrors()){
+            error.getFieldErrors()
+                    .forEach(fieldError ->
+                            log.error("field : {}, rejectValue : {}, message : {}", fieldError.getField(), fieldError.getRejectedValue(),  fieldError.getDefaultMessage())
+                    );
+            throw new SpeakerServerException(SpeakerServerErrorCode.BAD_REQUEST_NOT_INVALID_PARAMETER);
+        }
     }
 }

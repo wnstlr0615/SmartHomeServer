@@ -13,7 +13,6 @@ public class ArduinoLEDOnOffDto {
     public static class Request{
         private RoomType roomType;
         private LightState lightState;
-
         public static Request createArduinoLEDOnOffDtoRequest(RoomType roomType, LightState lightState){
             return Request.builder()
                     .roomType(roomType)

@@ -8,5 +8,5 @@ import lombok.Getter;
 public enum SpeakerServerErrorCode implements ErrorCode{
     BAD_REQUEST_NOT_INVALID_PARAMETER("파라미터가 올바르지 않습니다.", 400);
     private final String description;
-    private final int errorCode;
+    private final int statusCode;
 }

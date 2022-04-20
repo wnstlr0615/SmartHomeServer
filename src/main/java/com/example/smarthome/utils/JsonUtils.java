@@ -1,6 +1,8 @@
 package com.example.smarthome.utils;
 
 import com.example.smarthome.dto.ParameterDto;
+import com.example.smarthome.error.code.ArduinoServerErrorCode;
+import com.example.smarthome.error.exception.ArduinoServerException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,14 @@ public class JsonUtils {
             log.error("Json 매핑 에러");
             log.error(e.getMessage(), e);
             throw new RuntimeException("Json 매핑에 실패 하였습니다.");
+        }
+    }
+    public <T> T fromJson(String json, Class<T> responseType)  {
+        try {
+            return mapper.readValue(json, responseType);
+        } catch (JsonProcessingException e) {
+            log.error("fail JsonUtils fromJson Error - transfer type : {}", responseType.getName());
+            throw new ArduinoServerException(ArduinoServerErrorCode.ARDUINO_SERVER_RESPONSE_JSON_PARSING_ERROR);
         }
     }
 

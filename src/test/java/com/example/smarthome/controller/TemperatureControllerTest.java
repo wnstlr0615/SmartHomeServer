@@ -3,9 +3,8 @@ package com.example.smarthome.controller;
 import com.example.smarthome.dto.ParameterDto;
 import com.example.smarthome.dto.speker.ActionDto;
 import com.example.smarthome.dto.speker.SpeakerServerDto;
-import com.example.smarthome.model.LightState;
-import com.example.smarthome.model.RoomType;
-import com.example.smarthome.service.LEDService;
+import com.example.smarthome.model.TempType;
+import com.example.smarthome.service.TemperatureService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.smarthome.constant.EntityTypeConstant.LIGHT_STATE;
-import static com.example.smarthome.constant.EntityTypeConstant.ROOM_TYPE;
+import static com.example.smarthome.constant.EntityTypeConstant.TEMP_TYPE_DATA;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,10 +25,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = LEDController.class)
-class LEDControllerTest {
+@WebMvcTest(controllers = TemperatureController.class)
+class TemperatureControllerTest {
     @MockBean
-    LEDService ledService;
+    TemperatureService temperatureService;
     @Autowired
     MockMvc mvc;
     @Autowired
@@ -38,50 +36,48 @@ class LEDControllerTest {
 
     @Test
     @DisplayName("[성공][POST] ledOnOff 테스트")
-    public void givenRoomTypeAndLightState_whenLedOnOff_ThenReturnSpeakerResponseDto() throws Exception{
+    public void givenTempType_whenGetTemperature_ThenReturnSpeakerResponseDto() throws Exception{
         //given
         HashMap<String, ParameterDto> parameters = new HashMap<>();
-        ParameterDto roomTypeParameter = ParameterDto.createParameterDto("ROOMTYPE", "거실등");
-        ParameterDto lightStateParameter = ParameterDto.createParameterDto("LIGHT_STATE", "켜줘");
-        parameters.put("ROOM_TYPE", roomTypeParameter);
-        parameters.put("LIGHT_STATE", lightStateParameter);
-        ActionDto actionDto = ActionDto.createActionDto("answer.led", parameters);
+        ParameterDto roomTypeParameter = ParameterDto.createParameterDto("TEMSEN", "온도");
+        parameters.put("TEMPERATURE", roomTypeParameter);
+        ActionDto actionDto = ActionDto.createActionDto("answer.Temperature", parameters);
         SpeakerServerDto.Request request = SpeakerServerDto.Request.createSpeakerServerRequest(actionDto, null);
 
         Map<String, String> output = new HashMap<>();
-        output.put(ROOM_TYPE, "거실등");
-        output.put(LIGHT_STATE, "켜집니다.");
-        when(ledService.sendRequest(any(RoomType.class), any(LightState.class)))
+        output.put(TEMP_TYPE_DATA, "27");
+        when(temperatureService.sendRequestToGetTempTypeData(any(TempType.class)))
                 .thenReturn(
                         SpeakerServerDto.Response.createSpeakerResponse(output)
                 );
 
         //when //then
-        mvc.perform(post("/api/speaker/answer.led")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(
-                    mapper.writeValueAsBytes(request)
-            )
-        )
-            .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.version").value("2.0"))
-            .andExpect(jsonPath("$.resultCode").value("OK"))
-            .andExpect(jsonPath("$.output.ROOM_TYPE").value("거실등"))
-            .andExpect(jsonPath("$.output.LIGHT_STATE").value("켜집니다."))
-    ;
-        verify(ledService).sendRequest(any(RoomType.class), any(LightState.class));
+        mvc.perform(post("/api/speaker/answer.Temperature")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                mapper.writeValueAsBytes(request)
+                        )
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.version").value("2.0"))
+                .andExpect(jsonPath("$.resultCode").value("OK"))
+                .andExpect(jsonPath("$.output.TEMP_TYPE_DATA").value("27"))
+        ;
+        verify(temperatureService).sendRequestToGetTempTypeData(any(TempType.class));
     }
 
     @Test
-    @DisplayName("[실패][POST] ledOnOff 테스트 - beanValidation Error")
-    public void givenNullParameters_whenLedOnOff_ThenValidError() throws Exception{
+    @DisplayName("[실패][POST] ledOnOff 테스트 -  beanValidation Error")
+    public void givenNullParameters_whenGetTemperature_ThenValidError() throws Exception{
         //given
-        ActionDto actionDto = ActionDto.createActionDto("answer.led", null);
+
+        ActionDto actionDto = ActionDto.createActionDto("answer.Temperature", null);
         SpeakerServerDto.Request request = SpeakerServerDto.Request.createSpeakerServerRequest(actionDto, null);
 
+
         //when //then
-        mvc.perform(post("/api/speaker/answer.led")
+        mvc.perform(post("/api/speaker/answer.Temperature")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 mapper.writeValueAsBytes(request)
@@ -90,7 +86,6 @@ class LEDControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
         ;
-        verify(ledService, never()).sendRequest(any(RoomType.class), any(LightState.class));
+        verify(temperatureService, never()).sendRequestToGetTempTypeData(any(TempType.class));
     }
-
 }
