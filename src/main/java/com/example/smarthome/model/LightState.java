@@ -9,16 +9,16 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Getter
-public enum LightStateType {
+public enum LightState {
     TURN_ON(List.of("불켜줘", "켜줘"),"켜다", "켜집니다."),
     TURN_OFF(List.of("불꺼줘", "꺼줘"),"끄다", "꺼집니다.")
     ;
     private final List<String> synonyms;
-    private final String description;
+    private final String value;
     private final String responseMessage;
 
-    public static LightStateType fromValue(String value){
-        Optional<LightStateType> lightStateType = Arrays.stream(LightStateType.values())
+    public static LightState fromValue(String value){
+        Optional<LightState> lightStateType = Arrays.stream(LightState.values())
                 .filter(lightState ->
                         lightState.getSynonyms()
                                 .stream()

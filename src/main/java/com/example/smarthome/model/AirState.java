@@ -6,30 +6,27 @@ import lombok.Getter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 @AllArgsConstructor
 @Getter
-public enum TempType {
-    TEMPERATURE(List.of("온도"), "온도", "온도"),
-    SENSORY_TEMPERATURE(List.of("체감온도"), "체감온도", "체감온도"),
-    HUMIDITY(List.of("습도"), "습도", "습도")
+public enum AirState {
+    TURN_ON(List.of( "켜줘"), "켜다", "켜집니다."),
+    TURN_OFF(List.of("꺼줘"), "끄다", "꺼집니다.")
     ;
     private final List<String> synonyms;
     private final String value;
     private final String responseMessage;
 
-    public static TempType fromValue(String value){
-        Optional<TempType> tempType = Arrays.stream(TempType.values())
-                .filter(type ->
-                        type.getSynonyms()
+    public static AirState fromValue(String value){
+        Optional<AirState> stateType = Arrays.stream(AirState.values())
+                .filter(airState ->
+                    airState.getSynonyms()
                                 .stream()
                                 .anyMatch(
                                         synonym -> synonym.equals(value)
                                 )
                 ).findFirst();
-
-        return tempType.orElseThrow(
-                () -> new IllegalArgumentException("잘못된 TempType 입니다.")
+        return stateType.orElseThrow(
+                () -> new IllegalArgumentException("잘못된 AirStateType 입니다.")
         );
     }
 }

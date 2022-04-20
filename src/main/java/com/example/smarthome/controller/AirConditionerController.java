@@ -2,7 +2,7 @@ package com.example.smarthome.controller;
 
 import com.example.smarthome.dto.ParameterDto;
 import com.example.smarthome.dto.SpeakerResponse;
-import com.example.smarthome.model.AirStateType;
+import com.example.smarthome.model.AirState;
 import com.example.smarthome.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class AirConditionerController {
     @PostMapping("/answer.AirConditioner")
     public SpeakerResponse getTemperature(@RequestBody String json){
         ParameterDto parameter = jsonUtils.getParameter(json, AIR_STATE);
-        AirStateType stateType = AirStateType.fromValue(parameter.getValue());
+        AirState stateType = AirState.fromValue(parameter.getValue());
 
         log.info("아두이노 서버에 에어컨 온/오프 요청");
         log.info("잠시 후 에어컨이 {}", stateType.getResponseMessage());

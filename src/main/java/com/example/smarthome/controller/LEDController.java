@@ -2,12 +2,9 @@ package com.example.smarthome.controller;
 
 import com.example.smarthome.dto.ParameterDto;
 import com.example.smarthome.dto.SpeakerResponse;
-import com.example.smarthome.model.LightStateType;
+import com.example.smarthome.model.LightState;
 import com.example.smarthome.model.RoomType;
-import com.example.smarthome.service.LEDService;
 import com.example.smarthome.utils.JsonUtils;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -25,7 +22,6 @@ import static com.example.smarthome.constant.EntityTypeConstant.ROOM_TYPE;
 @Slf4j
 @RestController
 @RequestMapping(value = "/api/speaker", consumes = MediaType.APPLICATION_JSON_VALUE)
-
 @RequiredArgsConstructor
 public class LEDController {
     private final JsonUtils jsonUtils;
@@ -35,7 +31,7 @@ public class LEDController {
         ParameterDto lightStateParameter = jsonUtils.getParameter(json, LIGHT_STATE);
 
         RoomType roomType = RoomType.fromValue(roomParameter.getValue());
-        LightStateType stateType = LightStateType.fromValue(lightStateParameter.getValue());
+        LightState stateType = LightState.fromValue(lightStateParameter.getValue());
 
         //send Arduino server request
         log.info("아두이노 서버에 요청(임시)");

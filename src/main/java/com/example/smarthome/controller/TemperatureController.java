@@ -31,7 +31,7 @@ public class TemperatureController {
         TempType tempType = TempType.fromValue(parameter.getValue());
 
         log.info("아두이노 서버에 온도 요청");
-        log.info("Temperature : {}", tempType.getDescription());
+        log.info("Temperature : {}", tempType.getValue());
 
         String tmep = "40도";
         //response

@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class LightStateTypeTest {
+class LightStateTest {
 
     @Test
     @Description("[성공] 룸타입 fromValue 테스트")
@@ -15,14 +15,14 @@ class LightStateTypeTest {
 
         //then
         assertAll(
-                () -> assertThat(LightStateType.fromValue("켜줘"))
-                        .isEqualTo(LightStateType.TURN_ON),
-                () -> assertThat(LightStateType.fromValue("꺼줘"))
-                        .isEqualTo(LightStateType.TURN_OFF),
-                () -> assertThat(LightStateType.fromValue("불켜줘"))
-                        .isEqualTo(LightStateType.TURN_ON),
-                () -> assertThat(LightStateType.fromValue("불꺼줘"))
-                        .isEqualTo(LightStateType.TURN_OFF)
+                () -> assertThat(LightState.fromValue("켜줘"))
+                        .isEqualTo(LightState.TURN_ON),
+                () -> assertThat(LightState.fromValue("꺼줘"))
+                        .isEqualTo(LightState.TURN_OFF),
+                () -> assertThat(LightState.fromValue("불켜줘"))
+                        .isEqualTo(LightState.TURN_ON),
+                () -> assertThat(LightState.fromValue("불꺼줘"))
+                        .isEqualTo(LightState.TURN_OFF)
         );
     }
 
@@ -34,7 +34,7 @@ class LightStateTypeTest {
 
         //when & then
         assertThrows(IllegalArgumentException.class,
-                () -> LightStateType.fromValue(wrongValue)
+                () -> LightState.fromValue(wrongValue)
         );
 
     }

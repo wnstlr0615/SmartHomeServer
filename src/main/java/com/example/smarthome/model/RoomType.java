@@ -16,7 +16,7 @@ public enum RoomType {
     ALL_ROOM(List.of("전체", "전체등"),"전체등", "전체등")
     ;
     private final List<String> synonyms;
-    private final String description;
+    private final String value;
     private final String responseMessage;
 
     public static RoomType fromValue(String value){
