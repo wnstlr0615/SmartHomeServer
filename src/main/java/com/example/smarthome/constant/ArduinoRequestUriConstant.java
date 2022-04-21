@@ -6,4 +6,6 @@ public class ArduinoRequestUriConstant {
 
     public static final String TV_ONOFF_PATH = "/api/tv/onoff";
     public static final String TV_CHANNEL_PATH = "/api/tv/channel";
+    public static final String AIRCON_ONOFF_PATH = "/api/air/onoff";
+    public static final String AIRCON_CHANGE_TEMP_PATH = "/api/air/temp";
 }

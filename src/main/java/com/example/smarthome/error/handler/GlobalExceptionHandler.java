@@ -1,4 +1,4 @@
-package com.example.smarthome.handler;
+package com.example.smarthome.error.handler;
 
 import com.example.smarthome.error.exception.ArduinoServerException;
 import com.example.smarthome.error.exception.SpeakerServerException;
