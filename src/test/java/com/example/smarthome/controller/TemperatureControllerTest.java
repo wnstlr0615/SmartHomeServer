@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.smarthome.constant.EntityTypeConstant.TEMPERATURE;
 import static com.example.smarthome.constant.EntityTypeConstant.TEMP_TYPE_DATA;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -39,8 +40,8 @@ class TemperatureControllerTest {
     public void givenTempType_whenGetTemperature_ThenReturnSpeakerResponseDto() throws Exception{
         //given
         HashMap<String, ParameterDto> parameters = new HashMap<>();
-        ParameterDto roomTypeParameter = ParameterDto.createParameterDto("TEMSEN", "온도");
-        parameters.put("TEMPERATURE", roomTypeParameter);
+        ParameterDto tempParameter = ParameterDto.createParameterDto("TEMSEN", "온도");
+        parameters.put(TEMPERATURE, tempParameter);
         ActionDto actionDto = ActionDto.createActionDto("answer.Temperature", parameters);
         SpeakerServerDto.Request request = SpeakerServerDto.Request.createSpeakerServerRequest(actionDto, null);
 

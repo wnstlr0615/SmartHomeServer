@@ -1,26 +1,23 @@
 package com.example.smarthome.dto.arduino;
 
-import com.example.smarthome.model.LightState;
-import com.example.smarthome.model.RoomType;
+import com.example.smarthome.model.TvState;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
-
-public class ArduinoLEDOnOffDto {
+public class ArduinoTvOnOffDto {
     @AllArgsConstructor
     @NoArgsConstructor( access = AccessLevel.PROTECTED)
     @Getter
     @Builder
     public static class Request{
-        private RoomType roomType;
-        private LightState lightState;
-        public static Request createArduinoLEDOnOffDtoRequest(RoomType roomType, LightState lightState){
+        private TvState tvState;
+        public static ArduinoTvOnOffDto.Request createArduinoTvOnOffDtoRequest(@NonNull TvState tvState){
             return Request.builder()
-                    .roomType(roomType)
-                    .lightState(lightState)
+                    .tvState(tvState)
                     .build();
         }
     }
+
     @AllArgsConstructor
     @NoArgsConstructor( access = AccessLevel.PROTECTED)
     @Getter
@@ -28,8 +25,8 @@ public class ArduinoLEDOnOffDto {
     public static class Response{
         private String result;
         private String message;
-        public static ArduinoLEDOnOffDto.Response createArduinoLEDOnOffDtoResponse(@NonNull String result, @NonNull String message){
-            return ArduinoLEDOnOffDto.Response.builder()
+        public static ArduinoTvOnOffDto.Response createArduinoTvOnOffDtoResponse(@NonNull String result, @NonNull String message){
+            return Response.builder()
                     .result(result)
                     .message(message)
                     .build();
