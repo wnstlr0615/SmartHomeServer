@@ -27,6 +27,7 @@ import static com.example.smarthome.error.code.SpeakerServerErrorCode.BAD_REQUES
 public class AirConditionerController {
     private final AirConService airConService;
 
+    /** 에어컨 OnOff 요청*/
     @PostMapping("/answer.AirConditioner")
     public SpeakerServerDto.Response turnOnOffAirCon(
             @Valid @RequestBody SpeakerServerDto.Request request,
@@ -39,6 +40,8 @@ public class AirConditionerController {
         return airConService.sendAirConOnOffRequest(airState);
     }
 
+
+    /** 에어컨 온도 조절 요청 */
     @PostMapping("/answer.AirConTemp")
     public SpeakerServerDto.Response changeAirConTemp(
             @Valid @RequestBody SpeakerServerDto.Request request,

@@ -28,6 +28,7 @@ import static com.example.smarthome.constant.EntityTypeConstant.ROOM_TYPE;
 public class LEDController {
     private final LEDService ledService;
 
+    /** LED OnOff 요청*/
     @PostMapping("/answer.led")
     public SpeakerServerDto.Response ledOnOff(
             @Valid @RequestBody SpeakerServerDto.Request request,

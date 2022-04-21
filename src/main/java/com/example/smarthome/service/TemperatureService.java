@@ -25,6 +25,7 @@ public class TemperatureService {
     private final RestTemplateUtils restTemplateUtils;
     private final JsonUtils jsonUtils;
 
+    /** 온도/습도/체감온도 수집 요청 */
     public SpeakerServerDto.Response sendRequestToGetTempTypeData(TempType tempType) {
         //requestBody 생성
         ArduinoBringTempTypeDataDto.Request body = createArduinoBringTempTypeDataDtoRequest(tempType);
@@ -33,7 +34,7 @@ public class TemperatureService {
         Integer tempTypeData = sendTemperatureRequestToArduinoServer(body);
 
         //response 생성
-        return createArduinoBringTempTypeDataDtoResponse(tempTypeData);
+        return createSpeakerServerDtoResponse(tempTypeData);
     }
 
     private ArduinoBringTempTypeDataDto.Request createArduinoBringTempTypeDataDtoRequest(TempType tempType) {
@@ -52,7 +53,7 @@ public class TemperatureService {
         return response.getData();
     }
 
-    private SpeakerServerDto.Response createArduinoBringTempTypeDataDtoResponse(Integer tempTypeData) {
+    private SpeakerServerDto.Response createSpeakerServerDtoResponse(Integer tempTypeData) {
         Map<String, String> output = new HashMap<>();
         output.put(TEMP_TYPE_DATA, String.valueOf(tempTypeData));
         return SpeakerServerDto.Response.createSpeakerResponse(output);

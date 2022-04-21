@@ -27,6 +27,7 @@ import static com.example.smarthome.constant.EntityTypeConstant.TEMPERATURE;
 public class TemperatureController {
     private final TemperatureService temperatureService;
 
+    /** 온도/습도/체감온도 수집 요청 */
     @PostMapping("/answer.Temperature")
     public SpeakerServerDto.Response getTemperature(
             @Valid @RequestBody SpeakerServerDto.Request request,

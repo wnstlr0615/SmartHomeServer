@@ -24,6 +24,8 @@ import static com.example.smarthome.constant.EntityTypeConstant.ROOM_TYPE;
 @RequiredArgsConstructor
 public class LEDService {
     private final RestTemplateUtils restTemplateUtils;
+
+    /** LED OnOff 요청 */
     public SpeakerServerDto.Response sendRequest(RoomType roomType, LightState stateType) {
         //body 생성
         ArduinoLEDOnOffDto.Request body = createArduinoLedOnOffDtoRequest(roomType, stateType);
@@ -32,7 +34,7 @@ public class LEDService {
         sendLedOnOffRequestToArduinoServer(body);
 
         //response 생성
-        return createArduinoLedOnOffDtoResponse(roomType, stateType);
+        return createSpeakerServerDtoResponse(roomType, stateType);
     }
 
     private ArduinoLEDOnOffDto.Request createArduinoLedOnOffDtoRequest(RoomType roomType, LightState stateType) {
@@ -48,7 +50,7 @@ public class LEDService {
         log.info("아두이노 서버에 LED ON/OFF 요청을 완료하였습니다.");
     }
 
-    private SpeakerServerDto.Response createArduinoLedOnOffDtoResponse(RoomType roomType, LightState stateType) {
+    private SpeakerServerDto.Response createSpeakerServerDtoResponse(RoomType roomType, LightState stateType) {
         Map<String, String> output = new HashMap<>();
         output.put(ROOM_TYPE, roomType.getResponseMessage());
         output.put(LIGHT_STATE, stateType.getResponseMessage());

@@ -24,6 +24,7 @@ import static com.example.smarthome.constant.EntityTypeConstant.TV_RESULT;
 public class TvService {
     private final RestTemplateUtils restTemplateUtils;
 
+    /** TV OnOff 요청*/
     public SpeakerServerDto.Response sendTvOnOffRequest(TvState tvState) {
         //requestBody 생성
         ArduinoTvOnOffDto.Request body = createArduinoTvOnOffDtoRequest(tvState);
@@ -32,7 +33,9 @@ public class TvService {
         sendTvOnOffRequestToArduinoServer(body);
 
         //response 생성
-        return createArduinoTvOnOffDtoResponse(tvState);
+        return SpeakerServerDto.Response.createSpeakerResponse(
+            Map.of(TV_RESULT, tvState.getResponseMessage())
+        );
     }
 
     private ArduinoTvOnOffDto.Request createArduinoTvOnOffDtoRequest(TvState tvState) {
@@ -48,12 +51,7 @@ public class TvService {
         log.info("아두이노 서버에 TV ON/OFF 요청을 완료하였습니다.");
     }
 
-    private SpeakerServerDto.Response createArduinoTvOnOffDtoResponse(TvState tvState) {
-        Map<String, String> output = new HashMap<>();
-        output.put(TV_RESULT, tvState.getResponseMessage());
-        return SpeakerServerDto.Response.createSpeakerResponse(output);
-    }
-
+    /** 채널 변경 요청 */
     public SpeakerServerDto.Response sendTurnChannelRequest(int channel) {
         //requestBody 생성
         ArduinoTvChannelDto.Request body = createArduinoTvChannelDtoRequest(channel);
@@ -61,16 +59,13 @@ public class TvService {
         //아두이노 서버에 요청
         sendTvChannelRequestToArduinoServer(body);
 
-        return createArduinoTvChannelDtoResponse();
+        return SpeakerServerDto.Response.createSpeakerResponse(
+                Map.of()
+        );
     }
 
     private ArduinoTvChannelDto.Request createArduinoTvChannelDtoRequest(int channel) {
         return ArduinoTvChannelDto.Request.createArduinoTvChannelDtoRequest(channel);
-    }
-
-    private SpeakerServerDto.Response createArduinoTvChannelDtoResponse() {
-        Map<String, String> output = new HashMap<>();
-        return SpeakerServerDto.Response.createSpeakerResponse(output);
     }
 
     private void sendTvChannelRequestToArduinoServer(ArduinoTvChannelDto.Request body) {

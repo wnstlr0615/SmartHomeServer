@@ -27,6 +27,7 @@ import static com.example.smarthome.constant.EntityTypeConstant.TV_STATE;
 public class TvController {
     private final TvService tvService;
 
+    /** TV OnOff 요청*/
     @PostMapping("/answer.TvOnOff")
     public SpeakerServerDto.Response tvOnOff(
             @Valid @RequestBody SpeakerServerDto.Request request,
@@ -39,6 +40,7 @@ public class TvController {
         return tvService.sendTvOnOffRequest(tvState);
     }
 
+    /** TV 채널 변경 요청 */
     @PostMapping("/answer.TvChannel")
     public SpeakerServerDto.Response tvChannel(
             @Valid @RequestBody SpeakerServerDto.Request request,

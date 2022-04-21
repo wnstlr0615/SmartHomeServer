@@ -26,6 +26,7 @@ import static com.example.smarthome.constant.EntityTypeConstant.AIRCON_RESULT;
 public class AirConService {
     private final RestTemplateUtils restTemplateUtils;
 
+    /** 에어컨 On Off 요청 */
     public SpeakerServerDto.Response sendAirConOnOffRequest(AirState airState) {
         //request body 생성
         ArduinoAirConOnOffDto.Request body = createArduinoAirConOnOffDtoRequest(airState);
@@ -56,6 +57,7 @@ public class AirConService {
         return SpeakerServerDto.Response.createSpeakerResponse(output);
     }
 
+    /** 에어컨 온도 조절 요청*/
     public SpeakerServerDto.Response sendChangeTempRequest(Integer temperature) {
         //request body 생성
         ArduinoAirConChangeTempDto.Request body = createArduinoAirConChangeTempDtoRequest(temperature);
@@ -65,7 +67,7 @@ public class AirConService {
 
         //response
         return createSpeakerRserverDtoResponse(
-                Collections.EMPTY_MAP
+                Map.of()
         );
     }
 
