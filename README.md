@@ -7,6 +7,26 @@
 
 본 프로젝트에서는 총 3개에 와이파이 모듈이 사용되었으며 온습도센서, 릴레이 모듈, IR 송신 센서 총 3가지 센서를 사용하였습니다.
 
+### 🛠 기술 스택
+> - SpringBoot
+>   - Java  
+> - Docker
+>   - docker-compose
+
+
+### 실행
+```
+git clone https://github.com/wnstlr0615/SmartHomeServer.git
+cd SmartHomeServer
+
+> build 작업
+./gradlew build
+ 
+> 서버 실행
+docker-compose up
+```
+
+
 ### 온습도 센서
 방의 온도 및 습도 감지 기능이 있는 센서로 기본적으로 온도와 습도를 알려줄 때 사용되 며 특정 온습도 조건에 따라 요청을 보낼쌔 사용 된다.  
 ex) 온도가 27도 이상 일 경우 에어컨 가동, 습도가 낮으면 가습기 가동

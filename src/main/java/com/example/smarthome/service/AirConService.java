@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Map;
 
 import static com.example.smarthome.constant.ArduinoRequestUriConstant.AIRCON_CHANGE_TEMP_PATH;
@@ -35,7 +34,7 @@ public class AirConService {
         sendAirConOnOffRequestToArduinoServer(body);
 
         //response
-        return createSpeakerRserverDtoResponse(
+        return createSpeakerServerDtoResponse(
                 Map.of(AIRCON_RESULT, airState.getResponseMessage())
         );
     }
@@ -53,7 +52,7 @@ public class AirConService {
         log.info("아두이노 서버에 에어컨 ON/OFF 요청을 완료하였습니다.");
     }
 
-    private SpeakerServerDto.Response createSpeakerRserverDtoResponse(Map<String, String > output) {
+    private SpeakerServerDto.Response createSpeakerServerDtoResponse(Map<String, String > output) {
         return SpeakerServerDto.Response.createSpeakerResponse(output);
     }
 
@@ -66,7 +65,7 @@ public class AirConService {
         sendAirConChangeTempRequestToArduinoServer(body);
 
         //response
-        return createSpeakerRserverDtoResponse(
+        return createSpeakerServerDtoResponse(
                 Map.of()
         );
     }

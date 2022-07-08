@@ -1,1 +1,3 @@
-
+arduino:
+  host: http://localhost
+  port: 9090
